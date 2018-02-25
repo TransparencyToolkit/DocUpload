@@ -1,0 +1,20 @@
+<h1>File Upload Form</h1>
+
+<p>Upload a file here to add it to the archive for the <%=@project%> project.</p>
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+  <label for="doc_title">Document Title: </label>
+  <input type="text" id="doc_title" name="title">
+  <br /><br />
+
+  <label for="doc_desc">Document Description: </label>
+  <input type="text" id="doc_desc" name="description">
+  <br /><br />
+
+  <label for="doc_upload">File to Upload: </label>
+  <input type="file" id="doc_upload" name="file">
+  <br /><br />
+  
+  <input type="hidden" name="project" value="<%= @project %>">
+  <input type="submit">
+</form>
