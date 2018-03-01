@@ -68,6 +68,7 @@ module ProcessInput
     # Return params, including hash of file
     return {
       project: params["project"],
+      doc_type: params["doc_type"],
       doc_title: params["title"],
       doc_desc: params["description"],
       file_path: file_name,
