@@ -13,7 +13,7 @@ class UploadController < Sinatra::Base
   post "/upload" do
     # Upload docs and metadata to OCR server
     parse_and_send_everything(params)
-
+    
     # Redirect to success page
     redirect "/success?project=#{params["project"]}&doc_type=#{params["doc_type"]}"
   end

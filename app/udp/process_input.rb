@@ -27,6 +27,8 @@ module ProcessInput
       # Send each slice of the doc (chunks of 60000 bytes so that UDP can handle it)
       sliced = slice_string(encrypted_doc.to_s)
       sliced.each_with_index do |slice, i|
+        sleep(0.1) # Delay a little
+        puts "Sending #{i}"
         send_data({chunk_num: i, hash: metadata[:file_hash], slice: slice})
       end
     end
