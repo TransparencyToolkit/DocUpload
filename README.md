@@ -1,6 +1,6 @@
 This is a simple document upload form. To use-
 
-1. Ensure you have sinatra, erb, pry, and dock_integrity_check installed
+1. Ensure you have sinatra, gpgme, pry, and dock_integrity_check installed
 
 2. Set the gpg_recipient key ID and lookingglass_url in the config.ru file
 

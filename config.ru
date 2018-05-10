@@ -5,7 +5,7 @@ require "socket"
 require "doc_integrity_check"
 
 # Set key to encrypt to
-ENV['gpg_recipient'] = "3752BE4E"
+ENV['gpg_recipient'] = "3E491C10"
 
 # Set LookingGlass URL
 ENV['lookingglass_url'] = "http://localhost:3001"
