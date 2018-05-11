@@ -27,7 +27,7 @@ module ProcessInput
       # Send each slice of the doc (chunks of 60000 bytes so that UDP can handle it)
       sliced = slice_string(encrypted_doc.to_s)
       sliced.each_with_index do |slice, i|
-        sleep(0.1) # Delay a little
+        sleep(0.7) # Delay a little
         puts "Sending #{i}"
         send_data({chunk_num: i, hash: metadata[:file_hash], slice: slice})
       end
@@ -41,6 +41,7 @@ module ProcessInput
     encrypted_metadata = encrypt_data(JSON.pretty_generate([metadata]), ENV['gpg_recipient'])
 
     # Send the metadata
+    sleep(0.5)
     send_data({metadata: encrypted_metadata.to_s})
     return metadata
   end
