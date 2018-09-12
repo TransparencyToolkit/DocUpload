@@ -2,11 +2,14 @@ This is a simple document upload form. To use-
 
 1. Ensure you have sinatra, gpgme, pry, and dock_integrity_check installed
 
-2. Set the gpg_recipient key ID and lookingglass_url in the config.ru file
+2. In config.ru, set the gpg_recipient key ID to the GPG key on the OCR
+server. Set the gpg_signer to the key ID on this sever.
 
-3. In this directory, run: rackup config.ru
+3. Set the ocrserver_url and lookingglass_url in the config.ru file
 
-4. Go to http://localhost:9292/upload/archive_test/ArchiveTestDoc in your
+4. In this directory, run: rackup config.ru
+
+5. Go to http://localhost:9292/upload/archive_test/ArchiveTestDoc in your
 browser
 
 Note that "archive_test" determines the project spec (and index where the data
