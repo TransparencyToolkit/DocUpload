@@ -1,34 +1,71 @@
-<h1>File Upload Form</h1>
+<div class="row">
+    <div class="col-md-offset-3 col-md-6 item">
+        <h1>
+            <i class="icon-logo"></i>
+            Upload Files
+        </h1>
+        <p>Upload one or more files to the archive for the <strong><%=@project%></strong> project.</p>
+    </div>
+</div>
 
-<p>Upload a file here to add it to the archive for the <%=@project%> project.</p>
-
-<form action="/upload" method="post" enctype="multipart/form-data">
-  <label for="doc_title1">Document Title: </label>
-  <input type="text" id="doc_title1" name="title1">
-  <br /><br />
-
-  <label for="doc_desc1">Document Description: </label>
-  <input type="text" id="doc_desc1" name="description1">
-  <br /><br />
-
-  <label for="doc_upload1">File to Upload: </label>
-  <input type="file" id="doc_upload1" name="file1">
-  <br /><br />
-
-  <label for="doc_title2">Document Title: </label>
-  <input type="text" id="doc_title2" name="title2">
-  <br /><br />
-
-  <label for="doc_desc2">Document Description: </label>
-  <input type="text" id="doc_desc2" name="description2">
-  <br /><br />
-
-  <label for="doc_upload2">File to Upload: </label>
-  <input type="file" id="doc_upload2" name="file2">
-  <br /><br />
-      
-  
-  <input type="hidden" name="project" value="<%= @project %>">
-  <input type="hidden" name="doc_type" value="<%= @doc_type %>">
-  <input type="submit">
+<form id="files-upload" enctype="multipart/form-data">
+    <div id="files"></div>
+    <input type="hidden" name="project" value="<%= @project %>">
+    <input type="hidden" name="doc_type" value="<%= @doc_type %>">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6 item buttons">
+            <label for="pickfiles" class="btn btn-primary btn-lg btn-file">
+                <i class="icon-plus"></i>
+                Select Files
+                <input type="file" id="button-pickfiles" name="pickfiles" class="btn btn-secondary" multiple>
+            </label>
+            <!-- <input type="file" id="doc_upload1" name="file1" class="btn btn-secondary" multiple> -->
+            <button type="submit" class="btn btn-success btn-lg pull-right" id="button-upload" disabled>
+                <i class="icon-download"></i>
+                Upload Documents
+            </button>
+        </div>
+    </div>
 </form>
+
+<script id="template-file" type="text/html">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6 item">
+            <div class="row file">
+                <div class="col-md-2 number">
+                    <i class="icon-document"></i>
+                    <span>#{{ID}}</span>
+                </div>
+                <div class="col-md-10 details">
+                    <h4>
+                        {{FILENAME}}
+                    </h4>
+                    <span>
+                       File size: {{FILESIZE}} bytes
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="text" id="doc_title{{ID}}" name="title{{ID}}" class="form-control" placeholder="Document Title">
+            </div>
+            <div class="form-group">
+                <textarea id="doc_description{{ID}}" name="description{{ID}}" class="form-control" placeholder="Document Descrption"></textarea>
+            </div>
+            <div class="progress-bar progress-bar-striped active" id="progressbar-{{ID}}" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            </div>
+            <div class="col-md-6">
+                <button type="button" class="btn btn-danger hide" id="cancel-{{ID}}">
+                    Cancel
+                </button>
+            </div>
+            <div class="col-md-6">
+                <p class="progress-status" id="status-{{ID}}"></p>
+            </div>
+            <p class="progress-notify" id="notify-{{ID}}"></p>
+        </div>
+    </div>
+</script>
+
+<script src="/jquery.min.js"></script>
+<script src="/bootstrap.min.js"></script>
+<script src="/upload.js"></script>

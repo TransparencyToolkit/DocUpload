@@ -1,5 +1,6 @@
 class UploadController < Sinatra::Base
   set :views, File.expand_path('../../views', __FILE__)
+  set :public_folder, File.dirname(__FILE__) + '/../../public'
   include ProcessInput
 
   # Show the project form
@@ -13,7 +14,7 @@ class UploadController < Sinatra::Base
   post "/upload" do
     # Upload docs and metadata to OCR server
     parse_and_send_everything(params)
-    
+
     # Redirect to success page
     redirect "/success?project=#{params["project"]}&doc_type=#{params["doc_type"]}"
   end
