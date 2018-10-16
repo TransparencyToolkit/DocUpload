@@ -23,18 +23,16 @@ module ProcessInput
 
   # Calls methods to prepare and send docs + metadata to OCR server and then cleans up after
   def parse_and_send_everything(params)
-    # Check how many files
-    file_count = params.select{|k, v| k.include?("file")}.length
-    
+    # Check the number of the file
+    file_num = params.select{|p| p.include?("file")}.first[0].gsub("file", "")
+ 
     # Prepare and send the metadata
-    file_count.times do |count|
-      file_params = params.select{|k,v| k.include?("#{count+1}")}
-      metadata= prep_metadata(file_params, params["project"], count+1)
-      encrypted_metadata = encrypt_data(JSON.generate(metadata), ENV['gpg_recipient'], ENV['gpg_signer'])
+    file_params = params.select{|k,v| k.include?("#{file_num}")}
+    metadata= prep_metadata(file_params, params["project"], file_num)
+    encrypted_metadata = encrypt_data(JSON.generate(metadata), ENV['gpg_recipient'], ENV['gpg_signer'])
     
-      # Send the docs (all in tmp)
-      send_uploaded_docs(encrypted_metadata, metadata[:file_path])
-    end
+    # Send the docs (all in tmp)
+    send_uploaded_docs(encrypted_metadata, metadata[:file_path])
     
     # Clear files already sent
     delete_tmp
