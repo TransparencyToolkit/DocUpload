@@ -3,6 +3,8 @@
  * Transparency Toolkit - DocUploader
  */
 
+var pickedFiles = []
+
 var uploadSingleFile = function(file, id) {
     var ajax = new XMLHttpRequest()
 
@@ -49,9 +51,8 @@ var uploadSingleFile = function(file, id) {
 }
 
 var uploadFiles = function() {
-    var file = document.getElementById('button-pickfiles')
-    for (var i = 0; i < file.files.length; i++) {
-        uploadSingleFile(file.files[i], i)
+    for (var i = 0; i < pickedFiles.length; i++) {
+        uploadSingleFile(pickedFiles[i], i)
     }
 }
 
@@ -77,6 +78,10 @@ $(document).ready(function () {
     $('input[type=file]').change(function(e) {
         var template_file = $('#template-file').html()
         $(e.currentTarget.files).each(function(count, file) {
+            if (count == 0 && pickedFiles.length > 0) {
+                count = (pickedFiles.length)
+            }
+            pickedFiles.push(file)
             var html_item = renderFile(template_file, file, count)
             $('#files').append(html_item)
         })
