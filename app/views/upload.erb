@@ -11,14 +11,28 @@
 <form id="files-upload" enctype="multipart/form-data">
     <div id="files"></div>
     <input type="hidden" name="project" value="<%= @project %>">
-    <div class="row">
-        <div class="col-md-offset-3 col-md-6 item buttons">
+    <div id="status-done" class="row hide">
+        <div id="uploads-completed" class="col-md-offset-3 col-md-6 non-item">
+            <h3>Success</h3>
+            <p>All of your documents have finished uploading. You can now do one of the following:</p>
+            <a class="btn btn-info" href="/upload/<%= @project %>">
+                <i class="icon-download"></i>
+                Upload More Files
+            </a>
+            <a class="btn btn-primary pull-right" href="<%= ENV['lookingglass_url']%>">
+                <i class="icon-search"></i>
+                View Uploaded Documents
+            </a>
+
+        </div>
+    </div>
+    <div id="buttons-main" class="row">
+        <div class="col-md-offset-3 col-md-6 non-item">
             <label for="pickfiles" class="btn btn-primary btn-lg btn-file">
                 <i class="icon-plus"></i>
                 Select Files
                 <input type="file" id="button-pickfiles" name="pickfiles" class="btn btn-secondary" multiple>
             </label>
-            <!-- <input type="file" id="doc_upload1" name="file1" class="btn btn-secondary" multiple> -->
             <button type="submit" class="btn btn-success btn-lg pull-right" id="button-upload" disabled>
                 <i class="icon-download"></i>
                 Upload Documents

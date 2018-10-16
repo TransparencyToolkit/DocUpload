@@ -4,6 +4,16 @@
     margin-bottom: 2rem;
 }
 
+.non-item {
+    background-color: #FFFFFF;
+    margin-bottom: 2rem;
+    padding: 15px;
+}
+
+.non-item h3 {
+    margin-top: 0px;
+}
+
 .file {
     width: 100%;
     margin: 15px 0;
@@ -66,7 +76,7 @@
 }
 
 /* Submit Buttons */
-.buttons {
+.section {
     padding: 15px;
 }
 

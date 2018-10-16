@@ -12,7 +12,7 @@ class UploadController < Sinatra::Base
   # Process uploaded file (and doc title and desc)
   post "/upload" do
     # Upload docs and metadata to OCR server
-    parse_and_send_everything(params)
+    #parse_and_send_everything(params)
 
     # Redirect to success page
     redirect "/success?project=#{params["project"]}"
@@ -21,6 +21,6 @@ class UploadController < Sinatra::Base
   # Show a success message if it uploaded correctly
   get "/success" do
     content_type :json
-    {message: "File has been successfully uploaded"}.to_json
+    {status: "success", message: "File has been successfully uploaded"}.to_json
   end
 end

@@ -4,6 +4,7 @@
  */
 
 var pickedFiles = []
+var uploadStatus = []
 
 var uploadSingleFile = function(file, id) {
     var ajax = new XMLHttpRequest()
@@ -14,12 +15,25 @@ var uploadSingleFile = function(file, id) {
         $('#status-' + id).text(Math.round(percent) + '% uploaded, please wait...')
         $('#progressbar-' + id).css('width', percent + '%')
         $('#notify-' + id).text('Uploaded ' + (e.loaded / 1048576).toFixed(2) + " MB of " + (e.total / 1048576).toFixed(2) + ' MB')
+
+        if (Math.round(percent) == 100) {
+        }
     }, false)
 
     // Load listener
     ajax.addEventListener('load', function(e) {
-        $('#status-' + id).text(e.target.responseText)
-        $('#progressbar-' + id).css('width', '100%')
+        var response = JSON.parse(e.target.responseText)
+        if (response.status == 'success') {
+            uploadStatus.push('done')
+            if (uploadStatus.length == pickedFiles.length) {
+                $('#files').html('')
+                $('#status-done').removeClass('hide')
+                $('#buttons-main').addClass('hide')
+            } else {
+                $('#status-' + id).text(e.target.responseText)
+                $('#progressbar-' + id).css('width', '100%')
+            }
+        }
 
         // Hide Cancel button
         var btnCancel = $('#cancel-' + id)
