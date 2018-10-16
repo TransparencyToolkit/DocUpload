@@ -29,7 +29,7 @@ module ProcessInput
     # Prepare and send the metadata
     file_count.times do |count|
       file_params = params.select{|k,v| k.include?("#{count+1}")}
-      metadata= prep_metadata(file_params, params["project"], params["doc_type"], count+1)
+      metadata= prep_metadata(file_params, params["project"], count+1)
       encrypted_metadata = encrypt_data(JSON.generate(metadata), ENV['gpg_recipient'], ENV['gpg_signer'])
     
       # Send the docs (all in tmp)
@@ -41,7 +41,7 @@ module ProcessInput
   end
 
   # Parses the params input and returns a hash
-  def prep_metadata(params, project, doc_type, num)
+  def prep_metadata(params, project, num)
     # Separate out file name and save file
     file_name = SecureRandom.hex+"_"+params["file#{num}"]["filename"]+".gpg"
     file = params["file#{num}"]["tempfile"]
@@ -51,7 +51,6 @@ module ProcessInput
     # Return params, including hash of file
     return {
       project: project,
-      doc_type: doc_type,
       doc_title: params["title#{num}"],
       doc_desc: params["description#{num}"],
       file_path: file_name,

@@ -4,9 +4,8 @@ class UploadController < Sinatra::Base
   include ProcessInput
 
   # Show the project form
-  get "/upload/:project/:doc_type" do
+  get "/upload/:project" do
     @project = params["project"]
-    @doc_type = params["doc_type"]
     erb :upload
   end
 
@@ -16,13 +15,12 @@ class UploadController < Sinatra::Base
     parse_and_send_everything(params)
 
     # Redirect to success page
-    redirect "/success?project=#{params["project"]}&doc_type=#{params["doc_type"]}"
+    redirect "/success?project=#{params["project"]}"
   end
 
   # Show a success message if it uploaded correctly
   get "/success" do
     @project = params["project"]
-    @doc_type = params["doc_type"]
     erb :success
   end
 end
