@@ -3,17 +3,30 @@
 <p>Upload a file here to add it to the archive for the <%=@project%> project.</p>
 
 <form action="/upload" method="post" enctype="multipart/form-data">
-  <label for="doc_title">Document Title: </label>
-  <input type="text" id="doc_title" name="title">
+  <label for="doc_title1">Document Title: </label>
+  <input type="text" id="doc_title1" name="title1">
   <br /><br />
 
-  <label for="doc_desc">Document Description: </label>
-  <input type="text" id="doc_desc" name="description">
+  <label for="doc_desc1">Document Description: </label>
+  <input type="text" id="doc_desc1" name="description1">
   <br /><br />
 
-  <label for="doc_upload">File to Upload: </label>
-  <input type="file" id="doc_upload" name="file">
+  <label for="doc_upload1">File to Upload: </label>
+  <input type="file" id="doc_upload1" name="file1">
   <br /><br />
+
+  <label for="doc_title2">Document Title: </label>
+  <input type="text" id="doc_title2" name="title2">
+  <br /><br />
+
+  <label for="doc_desc2">Document Description: </label>
+  <input type="text" id="doc_desc2" name="description2">
+  <br /><br />
+
+  <label for="doc_upload2">File to Upload: </label>
+  <input type="file" id="doc_upload2" name="file2">
+  <br /><br />
+      
   
   <input type="hidden" name="project" value="<%= @project %>">
   <input type="hidden" name="doc_type" value="<%= @doc_type %>">

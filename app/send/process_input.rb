@@ -23,31 +23,37 @@ module ProcessInput
 
   # Calls methods to prepare and send docs + metadata to OCR server and then cleans up after
   def parse_and_send_everything(params)
-    # Prepare and send the metadata
-    metadata= prep_metadata(params)
-    encrypted_metadata = encrypt_data(JSON.generate(metadata), ENV['gpg_recipient'], ENV['gpg_signer'])
+    # Check how many files
+    file_count = params.select{|k, v| k.include?("file")}.length
     
-    # Send the docs (all in tmp)
-    send_uploaded_docs(encrypted_metadata, metadata[:file_path])
-
+    # Prepare and send the metadata
+    file_count.times do |count|
+      file_params = params.select{|k,v| k.include?("#{count+1}")}
+      metadata= prep_metadata(file_params, params["project"], params["doc_type"], count+1)
+      encrypted_metadata = encrypt_data(JSON.generate(metadata), ENV['gpg_recipient'], ENV['gpg_signer'])
+    
+      # Send the docs (all in tmp)
+      send_uploaded_docs(encrypted_metadata, metadata[:file_path])
+    end
+    
     # Clear files already sent
     delete_tmp
   end
 
   # Parses the params input and returns a hash
-  def prep_metadata(params)
+  def prep_metadata(params, project, doc_type, num)
     # Separate out file name and save file
-    file_name = "#{SecureRandom.hex}_#{params["file"]["filename"]}.gpg"
-    file = params["file"]["tempfile"]
+    file_name = SecureRandom.hex+"_"+params["file#{num}"]["filename"]+".gpg"
+    file = params["file#{num}"]["tempfile"]
     encrypted = encrypt_data(File.read(file), ENV['gpg_recipient'], ENV['gpg_signer'])
     File.write("tmp/#{file_name}", encrypted)
     
     # Return params, including hash of file
     return {
-      project: params["project"],
-      doc_type: params["doc_type"],
-      doc_title: params["title"],
-      doc_desc: params["description"],
+      project: project,
+      doc_type: doc_type,
+      doc_title: params["title#{num}"],
+      doc_desc: params["description#{num}"],
       file_path: file_name,
       file_hash: hash_file(encrypted)
     }
