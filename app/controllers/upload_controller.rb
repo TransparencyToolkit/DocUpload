@@ -12,7 +12,7 @@ class UploadController < Sinatra::Base
   # Process uploaded file (and doc title and desc)
   post "/upload" do
     # Upload docs and metadata to OCR server
-    #parse_and_send_everything(params)
+    parse_and_send_everything(params)
 
     # Redirect to success page
     redirect "/success?project=#{params["project"]}"
