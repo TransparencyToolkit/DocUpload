@@ -20,7 +20,7 @@ class UploadController < Sinatra::Base
 
   # Show a success message if it uploaded correctly
   get "/success" do
-    @project = params["project"]
-    erb :success
+    content_type :json
+    {message: "File has been successfully uploaded"}.to_json
   end
 end
