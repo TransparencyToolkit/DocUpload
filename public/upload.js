@@ -12,17 +12,26 @@ var uploadSingleFile = function(file, id) {
     // Progress listener
     ajax.upload.addEventListener('progress', function(e) {
         var percent = (e.loaded / e.total) * 100
-        $('#status-' + id).text(Math.round(percent) + '% uploaded, please wait...')
-        $('#progressbar-' + id).css('width', percent + '%')
-        $('#notify-' + id).text('Uploaded ' + (e.loaded / 1048576).toFixed(2) + " MB of " + (e.total / 1048576).toFixed(2) + ' MB')
+        $('#progress-bar-' + id).find('progress-bar').attr('aria-valuenow', percent).css('width', percent + '%')
+        $('#progress-bar-' + id).find('sr-only').html(percent + '% Complete')
+        var uploaded = (e.loaded / 1048576).toFixed(2) + " MB of " + (e.total / 1048576).toFixed(2) + ' MB'
+        var message = Math.round(percent) + '% compeleted ' + uploaded  + ' uploaded'
+        $('#progress-status-' + id).text(message)
 
-        if (Math.round(percent) == 100) {
+        if (percent == 100) {
+            $('#progress-bar-' + id).addClass('hide')
         }
+
     }, false)
 
     // Load listener
-    ajax.addEventListener('load', function(e) {
-        var response = JSON.parse(e.target.responseText)
+    ajax.addEventListener('load', function(res) {
+        if (res.target.status == 500) {
+            $('#progress-status-' + id).text('Unknown error uploading file')
+            return
+        }
+
+        var response = JSON.parse(res.target.responseText)
         if (response.status == 'success') {
             uploadStatus.push('done')
             if (uploadStatus.length == pickedFiles.length) {
@@ -30,8 +39,8 @@ var uploadSingleFile = function(file, id) {
                 $('#status-done').removeClass('hide')
                 $('#buttons-main').addClass('hide')
             } else {
-                $('#status-' + id).text(e.target.responseText)
-                $('#progressbar-' + id).css('width', '100%')
+                $('#progress-status-' + id).text(response.message)
+                $('#progress-bar-' + id).css('width', '100%')
             }
         }
 
@@ -41,11 +50,11 @@ var uploadSingleFile = function(file, id) {
     }, false)
 
     ajax.addEventListener("error", function(e) {
-        $('#status-' + id).text('Upload Failed')
+        $('#progress-status-' + id).text('Uploading file failed')
     }, false)
 
     ajax.addEventListener("abort", function(e) {
-        $('#status-' + id).text('Upload Aborted')
+        $('#progress-status-' + id).text('Uploading file aborted')
     }, false)
 
     // Prepare formfata
@@ -56,10 +65,16 @@ var uploadSingleFile = function(file, id) {
     uploadForm.append('title' + id, $('#doc_title' + id).val())
     uploadForm.append('description' + id, $('#doc_description' + id).val())
 
+    // Hide & Show
+    $('#file-fields-' + id).addClass('hide')
+    $('#progress-' + id).removeClass('hide')
+
+    // Start
     ajax.send(uploadForm)
     var btnCancel = $('#cancel-' + id)
         btnCancel.show()
         btnCancel.on('click', function() {
+            console.log('kjadlkjda')
             ajax.abort()
         })
 }

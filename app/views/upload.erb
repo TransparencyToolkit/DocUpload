@@ -58,23 +58,33 @@
                     </span>
                 </div>
             </div>
-            <div class="form-group">
-                <input type="text" id="doc_title{{ID}}" name="title{{ID}}" class="form-control" placeholder="Document Title">
+            <fieldset id="file-fields-{{ID}}">
+                <div class="form-group">
+                    <input type="text" id="doc_title{{ID}}" name="title{{ID}}" class="form-control" placeholder="Document Title">
+                </div>
+                <div class="form-group">
+                    <textarea id="doc_description{{ID}}" name="description{{ID}}" class="form-control" placeholder="Document Descrption"></textarea>
+                </div>
+            </fieldset>
+            <div id="progress-{{ID}}" class="add-bottom">
+                <div id="progress-bar-{{ID}}" class="progress">
+                    <div class="progress-bar progress-bar-primary progress-bar-striped"
+                            style="width: 0%" role="progressbar"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            aria-valuenow="0">
+                        <span class="sr-only">0% Complete</span>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <p id="progress-status-{{ID}}" class="progress-status pull-left">
+                        Starting upload...
+                    </p>
+                    <button type="button" class="btn btn-sm btn-danger pull-right" id="cancel-{{ID}}">
+                        Cancel
+                    </button>
+                </div>
             </div>
-            <div class="form-group">
-                <textarea id="doc_description{{ID}}" name="description{{ID}}" class="form-control" placeholder="Document Descrption"></textarea>
-            </div>
-            <div class="progress-bar progress-bar-striped active" id="progressbar-{{ID}}" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-            </div>
-            <div class="col-md-6">
-                <button type="button" class="btn btn-danger hide" id="cancel-{{ID}}">
-                    Cancel
-                </button>
-            </div>
-            <div class="col-md-6">
-                <p class="progress-status" id="status-{{ID}}"></p>
-            </div>
-            <p class="progress-notify" id="notify-{{ID}}"></p>
         </div>
     </div>
 </script>

@@ -20,7 +20,6 @@
 }
 
 .file .number {
-    width: 60px;
     height: 60px;
     background-color: #000000;
     color: #FFFFFF;
@@ -54,26 +53,11 @@
 }
 
 /* Progress Bars */
-.file .btn-danger {
-    display: none;
-    line-height: 6px;
-    height: 25px
+.progress-status {
+    margin-top: 5px;
+    font-style: italic;
 }
 
-.file .progress-bar {
-    width: 0%;
-}
-
-.file .progress-status {
-    text-align: right;
-    margin-right:-15px;
-    font-weight:bold;
-    color:saddlebrown;
-}
-
-.file .progress-notify {
-    text-align: right;
-}
 
 /* Submit Buttons */
 .section {
