@@ -3,7 +3,7 @@ module ProcessInput
 
   # Delete tmp uploaded files
   def delete_tmp
-    Dir.glob("tmp/*").each{|f| File.delete(f)}
+#    Dir.glob("tmp/*").each{|f| File.delete(f)}
   end
 
   # Send data to OCR server. Must be in hash or other format convertable to JSON

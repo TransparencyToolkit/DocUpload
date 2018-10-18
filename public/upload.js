@@ -15,7 +15,7 @@ var uploadSingleFile = function(file, id) {
         $('#progress-bar-' + id).find('progress-bar').attr('aria-valuenow', percent).css('width', percent + '%')
         $('#progress-bar-' + id).find('sr-only').html(percent + '% Complete')
         var uploaded = (e.loaded / 1048576).toFixed(2) + " MB of " + (e.total / 1048576).toFixed(2) + ' MB'
-        var message = Math.round(percent) + '% compeleted ' + uploaded  + ' uploaded'
+        var message = Math.round(percent) + '% completed ' + uploaded  + ' uploaded'
         $('#progress-status-' + id).text(message)
 
         if (percent == 100) {
@@ -58,7 +58,7 @@ var uploadSingleFile = function(file, id) {
     }, false)
 
     // Prepare formfata
-    ajax.open('POST', '/upload')
+    ajax.open('POST', '../upload')
     var uploadForm = new FormData()
     uploadForm.append('project', $('input[name=project]').val())
     uploadForm.append('file' + id, file)
