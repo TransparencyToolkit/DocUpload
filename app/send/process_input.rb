@@ -1,10 +1,7 @@
 module ProcessInput
   include DocIntegrityCheck
 
-  # Delete tmp uploaded files
-  def delete_tmp
-#    Dir.glob("tmp/*").each{|f| File.delete(f)}
-  end
+  tmp_dir = ENV['docupload_tmpdir'] || 'tmp'
 
   # Send data to OCR server. Must be in hash or other format convertable to JSON
   def send_data(data)
@@ -15,10 +12,12 @@ module ProcessInput
 
   # Send the uploaded docs. NOTE: Currently just works with one at a time in the metadata
   def send_uploaded_docs(metadata, path)
-    doc = "tmp/#{path}"
+    doc = "#{tmp_dir}/#{path}"
     encrypted_doc = File.read(doc)
     to_send = {metadata: metadata, file: encrypted_doc}
     send_data(to_send)
+    # Cleanup after passing it on by deleting it:
+    File.delete(doc)
   end
 
   # Calls methods to prepare and send docs + metadata to OCR server and then cleans up after
@@ -31,11 +30,8 @@ module ProcessInput
     metadata= prep_metadata(file_params, params["project"], file_num)
     encrypted_metadata = encrypt_data(JSON.generate(metadata), ENV['gpg_recipient'], ENV['gpg_signer'])
     
-    # Send the docs (all in tmp)
+    # Send the docs (all in tmp_dir)
     send_uploaded_docs(encrypted_metadata, metadata[:file_path])
-    
-    # Clear files already sent
-    delete_tmp
   end
 
   # Parses the params input and returns a hash
@@ -44,7 +40,7 @@ module ProcessInput
     file_name = SecureRandom.hex+"_"+params["file#{num}"]["filename"]+".gpg"
     file = params["file#{num}"]["tempfile"]
     encrypted = encrypt_data(File.read(file), ENV['gpg_recipient'], ENV['gpg_signer'])
-    File.write("tmp/#{file_name}", encrypted)
+    File.write("#{tmp_dir}/#{file_name}", encrypted)
     
     # Return params, including hash of file
     return {
