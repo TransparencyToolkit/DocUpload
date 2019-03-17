@@ -3,19 +3,36 @@ class UploadController < Sinatra::Base
   set :public_folder, File.dirname(__FILE__) + '/../../public'
   include ProcessInput
 
+  # Control access
+  before do
+    # Check with account system to verify access
+    archive_admin_cookie = request.cookies["archive_auth_key"]
+    http = Curl.post("#{ENV['ARCHIVEADMIN_URL']}/can_access_archive", {archive_auth_key: archive_admin_cookie,
+                                                                       archive_secret_key: ENV['ARCHIVE_SECRET_KEY'],
+                                                                       index_name: ENV['PROJECT_INDEX']})
+    has_access = JSON.parse(http.body_str)["has_access"]
+
+    # Redirect if doesn't hace access
+    if has_access == "unauthenticated"
+      redirect "#{ENV['ARCHIVEADMIN_URL']}/unauthenticated"
+    elsif has_access == "no"
+      redirect "#{ENV['ARCHIVEADMIN_URL']}/not_allowed"
+    end
+  end
+
   # Show the project form
-  get "/upload/:project" do
-    @project = params["project"]
+  get "/upload" do
+    @project = ENV['PROJECT_INDEX']
     erb :upload
   end
 
   # Process uploaded file (and doc title and desc)
   post "/upload" do
     # Upload docs and metadata to OCR server
-    parse_and_send_everything(params)
+    parse_and_save_everything(params, ENV['PROJECT_INDEX'])
 
     # Redirect to success page
-    redirect "/success?project=#{params["project"]}"
+    redirect "/success"
   end
 
   # Show a success message if it uploaded correctly

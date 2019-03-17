@@ -1,18 +1,21 @@
-This is a simple document upload form. To use-
+This is a simple document upload form for use with Transpareny Toolkit's tools.
 
-1. Ensure you have sinatra, gpgme, pry, and dock_integrity_check installed
+## Instructions
 
-2. In config.ru, set the gpg_recipient key ID to the GPG key on the OCR
-server. Set the gpg_signer to the key ID on this sever.
+1. Ensure you have sinatra, curb, and pry installed
 
-3. Set the ocrserver_url and lookingglass_url in the config.ru file
+2. The following environment variables need to be set (in config.ru or otherwise):
 
-4. In this directory, run: rackup config.ru
+   * LOOKINGGLASS_URL: URL to reach LookingGlass
+   * OCR_IN_PATH: Directory path files should save at for the OCR server to read
+   * OCR_OUT_PATH: Directory path OCRed data will be saved at
+   * ARCHIVEADMIN_URL: The URL to the archive admin system (for access verification
+   * PROJECT_INDEX: The index name for the archive
+   * ARCHIVE_SECRET_KEY: The secret key for the archive.
 
-5. Go to http://localhost:9292/upload/archive_test in your browser
+3. In this directory, run: rackup config.ru
 
-Note that "archive_test" determines the project spec (and index where the data
-is saved). The project spec parameter should match the config variable in the
-LookingGlass initializer.
+4. Go to http://localhost:9292/upload in your browser
+
 
 
