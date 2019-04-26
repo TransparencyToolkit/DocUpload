@@ -21,7 +21,7 @@ class UploadController < Sinatra::Base
   end
 
   # Show the project form
-  get "/upload" do
+  get "/" do
     @project = ENV['PROJECT_INDEX']
     erb :upload
   end

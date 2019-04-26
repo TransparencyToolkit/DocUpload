@@ -15,7 +15,7 @@ This is a simple document upload form for use with Transpareny Toolkit's tools.
 
 3. In this directory, run: rackup config.ru
 
-4. Go to http://localhost:9292/upload in your browser
+4. Go to http://localhost:9292 in your browser
 
 
 
