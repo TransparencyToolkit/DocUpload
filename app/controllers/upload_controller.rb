@@ -14,9 +14,9 @@ class UploadController < Sinatra::Base
 
     # Redirect if doesn't hace access
     if has_access == "unauthenticated"
-      redirect "#{ENV['ARCHIVEADMIN_URL']}/unauthenticated"
+      redirect "#{ENV['PUBLIC_ARCHIVEADMIN_URL']}/unauthenticated"
     elsif has_access == "no"
-      redirect "#{ENV['ARCHIVEADMIN_URL']}/not_allowed"
+      redirect "#{ENV['PUBLIC_ARCHIVEADMIN_URL']}/not_allowed"
     end
   end
 
