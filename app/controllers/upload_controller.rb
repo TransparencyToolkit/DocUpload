@@ -36,7 +36,7 @@ class UploadController < Sinatra::Base
   end
 
   # Show a success message if it uploaded correctly
-  get "/success" do
+  get "#{ENV['RAILS_RELATIVE_URL_ROOT']}success" do
     content_type :json
     {status: "success", message: "File has been successfully uploaded"}.to_json
   end
