@@ -32,7 +32,7 @@ class UploadController < Sinatra::Base
     parse_and_save_everything(params, ENV['PROJECT_INDEX'])
 
     # Redirect to success page
-    redirect "/success"
+    redirect "#{ENV['RAILS_RELATIVE_URL_ROOT']}success"
   end
 
   # Show a success message if it uploaded correctly
