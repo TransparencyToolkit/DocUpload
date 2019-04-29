@@ -58,7 +58,7 @@ var uploadSingleFile = function(file, id) {
     }, false)
 
     // Prepare formfata
-    ajax.open('POST', '../upload')
+    ajax.open('POST', '')
     var uploadForm = new FormData()
     uploadForm.append('project', $('input[name=project]').val())
     uploadForm.append('file' + id, file)

@@ -27,7 +27,7 @@ class UploadController < Sinatra::Base
   end
 
   # Process uploaded file (and doc title and desc)
-  post "/upload" do
+  post "/" do
     # Upload docs and metadata to OCR server
     parse_and_save_everything(params, ENV['PROJECT_INDEX'])
 
