@@ -3,6 +3,7 @@ require "erb"
 require "pry"
 require "socket"
 require "curb"
+require "digest/md5"
 
 # Set URLs to other apps
 ENV['LOOKINGGLASS_URL'] = "http://localhost:3001" if ENV['LOOKINGGLASS_URL'] == nil

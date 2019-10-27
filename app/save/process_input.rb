@@ -26,10 +26,11 @@ module ProcessInput
 
   # Save the raw file and return the name
   def save_raw_file(params, num)
-    file_name = "#{SecureRandom.hex}_"+params["file#{num}"]["filename"]
+    file_read = File.read(params["file#{num}"]["tempfile"])
+    file_name = "#{Digest::MD5.hexdigest(file_read)}_"+params["file#{num}"]["filename"]
     write_path = "#{ENV['OCR_IN_PATH']}/raw_docs/#{file_name}"
-    file = params["file#{num}"]["tempfile"]
-    File.write(write_path, File.read(file))
+    
+    File.write(write_path, file_read)
     return file_name
   end          
 
