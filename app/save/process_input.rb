@@ -22,6 +22,7 @@ module ProcessInput
     system("mkdir -p #{ENV['OCR_OUT_PATH']}/ocred_docs")
     system("mkdir -p #{ENV['OCR_OUT_PATH']}/raw_docs")
     system("mkdir -p #{ENV['OCR_OUT_PATH']}/already_indexed_json")
+    system("mkdir -p #{ENV['OCR_OUT_PATH']}/lg_pdf_view")
   end
 
   # Save the raw file and return the name
